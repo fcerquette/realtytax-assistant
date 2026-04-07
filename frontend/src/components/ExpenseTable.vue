@@ -34,7 +34,7 @@ function fmt(n) {
       <p>No expenses yet. Add one above to get started.</p>
     </div>
 
-    <table v-else>
+    <table v-else class="expense-table">
       <thead>
         <tr>
           <th>Name</th>
@@ -47,13 +47,13 @@ function fmt(n) {
       </thead>
       <tbody>
         <tr v-for="exp in expenses" :key="exp.id">
-          <td><strong>{{ exp.name }}</strong></td>
-          <td>{{ fmt(exp.amount) }}</td>
-          <td><span class="badge badge-category">{{ exp.category }}</span></td>
-          <td><span :class="badgeClass(exp.deductible)">{{ exp.deductible }}</span></td>
-          <td>{{ exp.note }}</td>
-          <td>
-            <button class="btn-delete" title="Delete" @click="$emit('delete', exp.id)">&times;</button>
+          <td data-label="Name"><strong>{{ exp.name }}</strong></td>
+          <td data-label="Amount">{{ fmt(exp.amount) }}</td>
+          <td data-label="Category"><span class="badge badge-category">{{ exp.category }}</span></td>
+          <td data-label="Deductible"><span :class="badgeClass(exp.deductible)">{{ exp.deductible }}</span></td>
+          <td data-label="Note" class="note-cell">{{ exp.note || '—' }}</td>
+          <td class="actions-cell">
+            <button class="btn-delete" title="Delete" @click="$emit('delete', exp.id)" aria-label="Delete">&times;</button>
           </td>
         </tr>
       </tbody>

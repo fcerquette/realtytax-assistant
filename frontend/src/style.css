@@ -258,15 +258,30 @@ tbody tr:hover {
 .btn-delete {
   background: none;
   border: none;
-  color: #cbd5e1;
+  color: #94a3b8;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 0.25rem;
-  transition: color 0.2s;
+  font-size: 1.25rem;
+  line-height: 1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 .btn-delete:hover {
   color: #ef4444;
+  background: #fee2e2;
+}
+
+.note-cell {
+  color: #64748b;
+  max-width: 240px;
+  word-wrap: break-word;
+}
+
+.actions-cell {
+  text-align: right;
+  width: 1%;
+  white-space: nowrap;
 }
 
 /* Empty state */
@@ -426,15 +441,104 @@ tbody tr:hover {
 
 /* Responsive */
 @media (max-width: 640px) {
+  .app {
+    padding: 1.25rem 1rem;
+  }
+
   .input-row {
     flex-direction: column;
   }
 
-  table {
-    font-size: 0.8rem;
+  .table-header {
+    padding: 1rem;
   }
 
-  thead th, tbody td {
-    padding: 0.5rem;
+  /* Convert expense table to stacked cards on mobile */
+  .expense-table thead {
+    display: none;
+  }
+
+  .expense-table,
+  .expense-table tbody,
+  .expense-table tr,
+  .expense-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .expense-table tr {
+    position: relative;
+    padding: 0.875rem 1rem 0.875rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .expense-table tr:hover {
+    background: transparent;
+  }
+
+  .expense-table td {
+    padding: 0.25rem 0;
+    border: none;
+    font-size: 0.875rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .expense-table td::before {
+    content: attr(data-label);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  /* Name takes full width and sits at the top */
+  .expense-table td[data-label="Name"] {
+    padding-right: 2.5rem; /* leave room for delete btn */
+    margin-bottom: 0.25rem;
+  }
+
+  .expense-table td[data-label="Name"]::before {
+    display: none;
+  }
+
+  .expense-table td[data-label="Name"] strong {
+    font-size: 0.95rem;
+  }
+
+  /* Note wraps under its label */
+  .expense-table td.note-cell {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.15rem;
+    max-width: none;
+  }
+
+  .expense-table td.note-cell:not(:has(+ .actions-cell)) {
+    /* fallback */
+  }
+
+  /* Delete button: absolute top-right of the card */
+  .expense-table td.actions-cell {
+    position: absolute;
+    top: 0.625rem;
+    right: 0.5rem;
+    padding: 0;
+    width: auto;
+    display: block;
+  }
+
+  .expense-table td.actions-cell::before {
+    display: none;
+  }
+
+  .btn-delete {
+    font-size: 1.5rem;
+    padding: 0.35rem 0.6rem;
+    color: #cbd5e1;
   }
 }
