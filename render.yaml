@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: realtytax-assistant
+    runtime: node
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build && cd ../backend && npm install
+    startCommand: cd backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: OLLAMA_BASE_URL
+        value: ""
+      - key: AI_MODEL
+        value: ""
